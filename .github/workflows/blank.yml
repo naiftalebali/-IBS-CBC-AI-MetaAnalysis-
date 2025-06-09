@@ -1,24 +1,13 @@
-/IBS-CBC-AI-MetaAnalysis/
-├── data/
-│   ├── aggregated_meta_data.csv
-│   ├── yemen_cohort_raw.csv (de-identified)
-│   └── supplemental_tables.xlsx
-├── code/
-│   ├── meta_analysis/
-│   │   ├── PRISMA_flow_diagram.R
-│   │   └── random_effects_model.R
-│   ├── AI_model/
-│   │   ├── xgboost_diagnostic.py
-│   │   ├── shap_interpretability.ipynb
-│   │   └── yemen_validation.py
-│   └── clinical_app/
-│       ├── app.py (Streamlit/FastAPI)
-│       └── ONNX_model_serve/
-├── results/
-│   ├── forest_plots/
-│   ├── ROC_curves/
-│   └── SHAP_visualizations/
-├── docs/
-│   ├── PROSPERO_protocol.pdf
-│   └── ethical_approval.pdf
-└── README.md
+name: Python CI
+     on: [push]
+     jobs:
+       test:
+         runs-on: ubuntu-latest
+         steps:
+         - uses: actions/checkout@v2
+         - name: Set up Python
+           uses: actions/setup-python@v2
+           with:
+             python-version: '3.10'
+         - run: pip install -r requirements.txt
+         - run: python -m pytest code/AI_model/
